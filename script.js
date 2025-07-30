@@ -34,10 +34,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Ninny is numbers 2-9, all others are Lillie
             if (i >= 2 && i <= 9) {
                 character = "Ninny";
-                characterDescription = "Ninny showcasing her incredible strength and determination";
+                characterDescription = "Ninny's powerful posterior captured from behind, showcasing her athletic curves and confident stance";
             } else {
                 character = "Lillie";
-                characterDescription = "Lillie demonstrating her graceful combat techniques and strategic prowess";
+                characterDescription = "Lillie's elegant backside featured in detailed rear-view composition, highlighting her graceful form and heroic silhouette";
             }
             
             images.push({
