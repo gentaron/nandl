@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninny & Lillie - Photo Collectible</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="hero-section">
+        <div class="hero-content">
+            <h1 class="title">Ninny & Lillie</h1>
+            <h2 class="subtitle">Superheroines Photo Collectible</h2>
+            <p class="creator">Created by Apollon</p>
+        </div>
+    </header>
+
+    <main class="gallery-container">
+        <section class="photo-info">
+            <div class="info-card">
+                <h3>About the Collection</h3>
+                <div class="heroines-info">
+                    <div class="heroine">
+                        <h4>Ninny</h4>
+                        <p>A powerful superheroine with extraordinary abilities and unwavering determination.</p>
+                    </div>
+                    <div class="heroine">
+                        <h4>Lillie</h4>
+                        <p>A graceful yet fierce protector, known for her strategic mind and heroic spirit.</p>
+                    </div>
+                </div>
+                <div class="collection-stats">
+                    <span class="stat">48 Exclusive Photos</span>
+                    <span class="stat">Limited Edition</span>
+                    <span class="stat">Digital Collectible</span>
+                </div>
+                
+                <div class="collection-links">
+                    <a href="https://apolonium.itch.io/heroines" target="_blank" class="collection-link gallery-link">
+                        <span class="link-icon">🎨</span>
+                        <div class="link-content">
+                            <h4>Detailed Photo Gallery</h4>
+                            <p>Explore the complete collection on itch.io</p>
+                        </div>
+                    </a>
+                    
+                    <a href="https://www.patreon.com/c/apolon_org" target="_blank" class="collection-link community-link">
+                        <span class="link-icon">🌟</span>
+                        <div class="link-content">
+                            <h4>Creative Community Portal</h4>
+                            <p>Join our comprehensive creative space - More than just illustrations</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="photo-gallery">
+            <div class="gallery-header">
+                <h3>Photo Gallery</h3>
+                <div class="view-controls">
+                    <button class="view-btn active" data-view="grid">Grid View</button>
+                    <button class="view-btn" data-view="book">Book View</button>
+                </div>
+            </div>
+            
+            <div class="gallery grid-view" id="gallery">
+                <!-- Images will be dynamically generated -->
+            </div>
+        </section>
+
+        <div class="modal" id="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <img class="modal-image" id="modalImage">
+                <div class="modal-info">
+                    <h4 id="modalTitle"></h4>
+                    <p id="modalDescription"></p>
+                </div>
+                <div class="modal-nav">
+                    <button class="nav-btn" id="prevBtn">❮ Previous</button>
+                    <span class="image-counter" id="imageCounter"></span>
+                    <button class="nav-btn" id="nextBtn">Next ❯</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Created by Apollon | Ninny & Lillie Superheroines Collection</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
