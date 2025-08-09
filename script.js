@@ -213,8 +213,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add loading animation after gallery is created
     setTimeout(addLoadingAnimation, 100);
     
-    // Video Showcase Functionality
-    initVideoShowcase();
+    // Interactive Slider Functionality
+    initInteractiveSlider();
     
     // Add touch/swipe support for mobile
     let touchStartX = 0;
@@ -298,24 +298,22 @@ document.addEventListener('DOMContentLoaded', function() {
         statsObserver.observe(statsSection);
     }
     
-    // Video Showcase Initialization
-    function initVideoShowcase() {
-        const showcase = document.getElementById('animatedShowcase');
-        const playPauseBtn = document.getElementById('playPauseBtn');
-        const progressFill = document.getElementById('progressFill');
+    // Interactive Slider Initialization
+    function initInteractiveSlider() {
+        const sliderTrack = document.getElementById('sliderTrack');
+        const prevBtn = document.getElementById('prevSlide');
+        const nextBtn = document.getElementById('nextSlide');
+        const indicatorsContainer = document.getElementById('slideIndicators');
         const slides = document.querySelectorAll('.showcase-slide');
         const ninnyContainer = document.getElementById('ninnyImages');
         const lillieContainer = document.getElementById('lillieImages');
         
-        if (!showcase || !playPauseBtn || !progressFill || slides.length === 0) {
+        if (!sliderTrack || !prevBtn || !nextBtn || !indicatorsContainer || slides.length === 0) {
             return; // Elements not found, skip initialization
         }
         
         let currentSlide = 0;
-        let isPlaying = true;
-        let slideInterval;
-        const slideDuration = 4000; // 4 seconds per slide
-        let progressInterval;
+        const totalSlides = slides.length;
         
         // Get random images for characters
         function getRandomImages(characterImages, count = 2) {
@@ -350,94 +348,71 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Start the slideshow
-        function startSlideshow() {
-            slideInterval = setInterval(nextSlide, slideDuration);
-            progressInterval = setInterval(updateProgress, 50);
-            isPlaying = true;
-            playPauseBtn.textContent = '⏸️';
+        // Create slide indicators
+        function createIndicators() {
+            indicatorsContainer.innerHTML = '';
+            for (let i = 0; i < totalSlides; i++) {
+                const indicator = document.createElement('div');
+                indicator.className = `indicator ${i === 0 ? 'active' : ''}`;
+                indicator.addEventListener('click', () => goToSlide(i));
+                indicatorsContainer.appendChild(indicator);
+            }
         }
         
-        // Pause the slideshow
-        function pauseSlideshow() {
-            clearInterval(slideInterval);
-            clearInterval(progressInterval);
-            isPlaying = false;
-            playPauseBtn.textContent = '▶️';
+        // Update slider position
+        function updateSliderPosition() {
+            const translateX = -currentSlide * 25; // 25% per slide
+            sliderTrack.style.transform = `translateX(${translateX}%)`;
+            
+            // Update indicators
+            document.querySelectorAll('.indicator').forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlide);
+            });
         }
         
-        // Go to next slide
+        // Navigation functions
+        function goToSlide(slideIndex) {
+            if (slideIndex >= 0 && slideIndex < totalSlides) {
+                currentSlide = slideIndex;
+                
+                // Update random images when entering character slides
+                const currentSlideElement = slides[currentSlide];
+                if (currentSlideElement.dataset.character) {
+                    updateShowcaseImages();
+                }
+                
+                updateSliderPosition();
+            }
+        }
+        
         function nextSlide() {
-            slides[currentSlide].classList.remove('active');
-            slides[currentSlide].classList.add('prev');
-            
-            currentSlide = (currentSlide + 1) % slides.length;
-            
-            // Update random images when entering character slides
-            const currentSlideElement = slides[currentSlide];
-            if (currentSlideElement.dataset.character) {
-                updateShowcaseImages();
-            }
-            
-            slides[currentSlide].classList.remove('prev');
-            slides[currentSlide].classList.add('active');
-            
-            // Reset progress
-            progressFill.style.width = '0%';
-            
-            // Reset previous slide after transition
-            setTimeout(() => {
-                slides.forEach((slide, index) => {
-                    if (index !== currentSlide) {
-                        slide.classList.remove('prev', 'active');
-                    }
-                });
-            }, 800);
+            const nextIndex = (currentSlide + 1) % totalSlides;
+            goToSlide(nextIndex);
         }
         
-        // Update progress bar
-        function updateProgress() {
-            const progressPercent = ((Date.now() % slideDuration) / slideDuration) * 100;
-            progressFill.style.width = progressPercent + '%';
+        function prevSlide() {
+            const prevIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+            goToSlide(prevIndex);
         }
         
-        // Play/Pause button functionality
-        playPauseBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                pauseSlideshow();
-            } else {
-                startSlideshow();
-            }
-        });
+        // Event listeners
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
         
-        // Progress bar click to seek
-        document.querySelector('.progress-bar').addEventListener('click', (e) => {
-            const rect = e.target.getBoundingClientRect();
-            const clickX = e.clientX - rect.left;
-            const progressPercent = (clickX / rect.width) * 100;
-            progressFill.style.width = progressPercent + '%';
-            
-            // If playing, restart the current slide cycle
-            if (isPlaying) {
-                pauseSlideshow();
-                setTimeout(startSlideshow, 100);
-            }
-        });
-        
-        // Touch/swipe support for slides
+        // Touch/swipe support for slider
         let touchStartX = 0;
         let touchEndX = 0;
         
-        showcase.addEventListener('touchstart', (e) => {
+        sliderTrack.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
         });
         
-        showcase.addEventListener('touchend', (e) => {
+        sliderTrack.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
-            handleSlideSwipe();
+            handleSliderSwipe();
         });
         
-        function handleSlideSwipe() {
+        function handleSliderSwipe() {
             const swipeThreshold = 50;
             const diff = touchStartX - touchEndX;
             
@@ -447,69 +422,32 @@ document.addEventListener('DOMContentLoaded', function() {
                     nextSlide();
                 } else {
                     // Swipe right - previous slide
-                    slides[currentSlide].classList.remove('active');
-                    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-                    
-                    // Update random images when entering character slides
-                    const swipeSlideElement = slides[currentSlide];
-                    if (swipeSlideElement.dataset.character) {
-                        updateShowcaseImages();
-                    }
-                    
-                    slides[currentSlide].classList.add('active');
-                }
-                
-                // Reset slideshow if playing
-                if (isPlaying) {
-                    pauseSlideshow();
-                    setTimeout(startSlideshow, 100);
+                    prevSlide();
                 }
             }
         }
         
         // Keyboard controls
         document.addEventListener('keydown', (e) => {
-            if (showcase.getBoundingClientRect().top < window.innerHeight && 
-                showcase.getBoundingClientRect().bottom > 0) {
+            if (sliderTrack.getBoundingClientRect().top < window.innerHeight && 
+                sliderTrack.getBoundingClientRect().bottom > 0) {
                 switch(e.key) {
-                    case ' ':
-                        e.preventDefault();
-                        playPauseBtn.click();
-                        break;
                     case 'ArrowLeft':
                         e.preventDefault();
-                        // Previous slide logic (same as swipe right)
-                        slides[currentSlide].classList.remove('active');
-                        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-                        
-                        // Update random images when entering character slides
-                        const prevSlideElement = slides[currentSlide];
-                        if (prevSlideElement.dataset.character) {
-                            updateShowcaseImages();
-                        }
-                        
-                        slides[currentSlide].classList.add('active');
-                        if (isPlaying) {
-                            pauseSlideshow();
-                            setTimeout(startSlideshow, 100);
-                        }
+                        prevSlide();
                         break;
                     case 'ArrowRight':
                         e.preventDefault();
                         nextSlide();
-                        if (isPlaying) {
-                            pauseSlideshow();
-                            setTimeout(startSlideshow, 100);
-                        }
                         break;
                 }
             }
         });
         
-        // Initialize showcase images and first slide
+        // Initialize slider
+        createIndicators();
         updateShowcaseImages();
-        slides[0].classList.add('active');
-        startSlideshow();
+        updateSliderPosition();
         
         // Add image error handling
         function addImageErrorHandling() {
@@ -528,14 +466,5 @@ document.addEventListener('DOMContentLoaded', function() {
             originalUpdateShowcaseImages();
             setTimeout(addImageErrorHandling, 100);
         };
-        
-        // Pause when page is not visible
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden && isPlaying) {
-                pauseSlideshow();
-            } else if (!document.hidden && !isPlaying) {
-                startSlideshow();
-            }
-        });
     }
 });

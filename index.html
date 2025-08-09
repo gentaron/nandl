@@ -17,9 +17,10 @@
     </header>
 
     <main class="gallery-container">
-        <section class="video-showcase">
-            <div class="video-container">
-                <div class="animated-showcase" id="animatedShowcase">
+        <section class="interactive-slider">
+            <div class="slider-container">
+                <div class="slider-showcase" id="sliderShowcase">
+                    <div class="slider-track" id="sliderTrack">
                     <div class="showcase-slide active">
                         <div class="slide-content">
                             <h2>Ninny & Lillie</h2>
@@ -30,7 +31,7 @@
                     <div class="showcase-slide" data-character="ninny">
                         <div class="slide-content">
                             <h2>Ninny</h2>
-                            <p>Collectibles #2-#9: Athletic physique captured from behind</p>
+                            <p>Seductive warrior poses showcasing her powerful curves from tantalizing rear angles</p>
                             <div class="showcase-images" id="ninnyImages">
                                 <!-- Images will be dynamically loaded -->
                             </div>
@@ -39,7 +40,7 @@
                     <div class="showcase-slide" data-character="lillie">
                         <div class="slide-content">
                             <h2>Lillie</h2>
-                            <p>Elegant curves in detailed rear-view compositions</p>
+                            <p>Enchanting beauty captured in intimate posterior portraits highlighting her alluring silhouette</p>
                             <div class="showcase-images" id="lillieImages">
                                 <!-- Images will be dynamically loaded -->
                             </div>
@@ -55,12 +56,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="video-controls">
-                    <button class="control-btn" id="playPauseBtn">⏸️</button>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
                     </div>
+                </div>
+                <div class="slider-controls">
+                    <button class="slider-nav prev" id="prevSlide">❮</button>
+                    <div class="slide-indicators" id="slideIndicators">
+                        <!-- Indicators will be generated -->
+                    </div>
+                    <button class="slider-nav next" id="nextSlide">❯</button>
                 </div>
             </div>
         </section>
