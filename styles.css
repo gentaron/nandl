@@ -5,11 +5,11 @@
 }
 
 body {
-    font-family: 'Segoe UI', 'Arial', sans-serif;
-    background: linear-gradient(135deg, #0a0a0f, #1a0d1a, #0d0a1a, #1a1a2e);
+    font-family: 'Playfair Display', serif;
+    background: linear-gradient(135deg, #2d0a1f, #4a1139, #3d0f2a, #5a1f4a);
     background-size: 400% 400%;
     animation: gradientFlow 15s ease infinite;
-    color: #ffffff;
+    color: #ffeef7;
     line-height: 1.6;
     overflow-x: hidden;
     min-height: 100vh;
@@ -24,19 +24,19 @@ body {
 /* Hero Section */
 .hero-section {
     background: 
-        radial-gradient(ellipse at center, rgba(255,107,107,0.1) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 20%, rgba(77,121,255,0.1) 0%, transparent 50%),
-        radial-gradient(ellipse at 20% 80%, rgba(255,217,61,0.1) 0%, transparent 50%),
-        linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.6)), 
-        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="stars" x="0" y="0" width="15" height="15" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="0.5" fill="%23ffffff" opacity="0.4"/><circle cx="8" cy="7" r="0.3" fill="%23ff6b6b" opacity="0.3"/><circle cx="12" cy="3" r="0.4" fill="%234d79ff" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23stars)"/></svg>');
+        radial-gradient(ellipse at center, rgba(255,105,180,0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(255,20,147,0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 20% 80%, rgba(255,110,199,0.2) 0%, transparent 50%),
+        linear-gradient(rgba(45,10,31,0.9), rgba(77,17,57,0.8)), 
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="stars" x="0" y="0" width="15" height="15" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="0.5" fill="%23ffeef7" opacity="0.4"/><circle cx="8" cy="7" r="0.3" fill="%23ff69b4" opacity="0.4"/><circle cx="12" cy="3" r="0.4" fill="%23ff1493" opacity="0.4"/></pattern></defs><rect width="100" height="100" fill="url(%23stars)"/></svg>');
     min-height: 70vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     position: relative;
-    border-bottom: 2px solid rgba(255,107,107,0.3);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border-bottom: 2px solid rgba(255,105,180,0.4);
+    box-shadow: 0 10px 30px rgba(255,20,147,0.3);
 }
 
 .hero-content {
@@ -46,29 +46,35 @@ body {
 }
 
 .title {
-    font-size: 4rem;
-    font-weight: bold;
-    background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d79ff);
+    font-family: 'Dancing Script', cursive;
+    font-size: 5rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, #ff69b4, #ff1493, #ff6ec7, #e91e63);
     background-size: 300% 300%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: gradientShift 3s ease-in-out infinite alternate;
     margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    text-shadow: 3px 3px 6px rgba(255,20,147,0.4);
+    letter-spacing: 2px;
 }
 
 .subtitle {
+    font-family: 'Playfair Display', serif;
     font-size: 1.8rem;
-    color: #e0e0e0;
+    color: #ffc4dd;
     margin-bottom: 1rem;
-    font-weight: 300;
+    font-weight: 400;
+    font-style: italic;
 }
 
 .creator {
-    font-size: 1.2rem;
-    color: #b0b0b0;
-    font-style: italic;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.4rem;
+    color: #ff69b4;
+    font-style: normal;
+    font-weight: 600;
 }
 
 @keyframes gradientShift {
@@ -83,21 +89,242 @@ body {
     padding: 2rem;
 }
 
+/* Video Showcase Section */
+.video-showcase {
+    margin-bottom: 4rem;
+}
+
+.video-container {
+    background: linear-gradient(145deg, rgba(45,10,31,0.95), rgba(77,17,57,0.9));
+    border-radius: 25px;
+    padding: 2rem;
+    border: 2px solid rgba(255,105,180,0.4);
+    box-shadow: 
+        0 20px 50px rgba(45,10,31,0.6),
+        inset 0 1px 0 rgba(255,196,221,0.2),
+        0 0 30px rgba(255,105,180,0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.animated-showcase {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #4a1139, #2d0a1f, #5a1f4a);
+}
+
+.showcase-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    background: 
+        radial-gradient(ellipse at center, rgba(255,105,180,0.2) 0%, transparent 70%),
+        radial-gradient(ellipse at 80% 20%, rgba(255,20,147,0.2) 0%, transparent 70%),
+        radial-gradient(ellipse at 20% 80%, rgba(255,110,199,0.2) 0%, transparent 70%);
+}
+
+.showcase-slide.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.showcase-slide.prev {
+    transform: translateX(-100%);
+}
+
+.slide-content {
+    text-align: center;
+    color: #ffeef7;
+    z-index: 2;
+    max-width: 600px;
+    padding: 2rem;
+}
+
+.slide-content h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #ff69b4, #ff1493, #ff6ec7, #e91e63);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease-in-out infinite alternate;
+    text-shadow: 2px 2px 4px rgba(255,20,147,0.4);
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.slide-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: #ffc4dd;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.slide-content p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: #ffb3d6;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.showcase-images {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+}
+
+.showcase-image {
+    position: relative;
+    width: 180px;
+    height: 240px;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 2px solid rgba(255,105,180,0.4);
+    box-shadow: 
+        0 10px 30px rgba(45,10,31,0.4),
+        0 0 20px rgba(255,105,180,0.3);
+    transition: all 0.3s ease;
+}
+
+.showcase-image:hover {
+    transform: scale(1.05);
+    border-color: rgba(255,105,180,0.7);
+    box-shadow: 
+        0 15px 40px rgba(45,10,31,0.5),
+        0 0 30px rgba(255,105,180,0.5);
+}
+
+.showcase-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.showcase-image:hover img {
+    transform: scale(1.1);
+}
+
+.image-label {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: linear-gradient(135deg, #ff69b4, #ff1493);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(45,10,31,0.3);
+    border: 1px solid rgba(255,196,221,0.3);
+    font-family: 'Playfair Display', serif;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-btn {
+    background: linear-gradient(135deg, #ff69b4, #e91e63);
+    color: white;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    font-weight: bold;
+    font-family: 'Playfair Display', serif;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(45,10,31,0.3);
+    border: 1px solid rgba(255,196,221,0.3);
+}
+
+.cta-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(45,10,31,0.4);
+    background: linear-gradient(135deg, #ff1493, #c2185b);
+}
+
+.video-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(0,0,0,0.3);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.control-btn {
+    background: linear-gradient(135deg, #ff6b6b, #4d79ff);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-btn:hover {
+    transform: scale(1.1);
+}
+
+.progress-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff6b6b, #4d79ff, #ffd93d);
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.1s ease;
+}
+
 /* Photo Info Section */
 .photo-info {
     margin-bottom: 3rem;
 }
 
 .info-card {
-    background: linear-gradient(145deg, rgba(10,10,15,0.9), rgba(26,13,26,0.8));
+    background: linear-gradient(145deg, rgba(45,10,31,0.9), rgba(77,17,57,0.8));
     backdrop-filter: blur(15px);
     border-radius: 25px;
     padding: 2.5rem;
-    border: 2px solid rgba(255,107,107,0.2);
+    border: 2px solid rgba(255,105,180,0.3);
     box-shadow: 
-        0 20px 50px rgba(0,0,0,0.5),
-        inset 0 1px 0 rgba(255,255,255,0.1),
-        0 0 20px rgba(255,107,107,0.1);
+        0 20px 50px rgba(45,10,31,0.5),
+        inset 0 1px 0 rgba(255,196,221,0.2),
+        0 0 20px rgba(255,105,180,0.2);
     position: relative;
     overflow: hidden;
 }
@@ -109,26 +336,31 @@ body {
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,107,107,0.5), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,105,180,0.5), transparent);
 }
 
 .info-card h3 {
-    font-size: 2rem;
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
     margin-bottom: 1rem;
     text-align: center;
-    color: #ffd93d;
+    color: #ff69b4;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 
 .collection-description {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #e0e0e0;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: #ffc4dd;
     text-align: center;
     margin-bottom: 2rem;
-    padding: 1rem;
-    background: rgba(255,107,107,0.1);
+    padding: 1.5rem;
+    background: rgba(255,105,180,0.15);
     border-radius: 15px;
-    border: 1px solid rgba(255,107,107,0.2);
+    border: 1px solid rgba(255,105,180,0.3);
+    font-style: italic;
 }
 
 .heroines-info {
@@ -139,13 +371,13 @@ body {
 }
 
 .heroine {
-    background: linear-gradient(135deg, rgba(10,10,15,0.8), rgba(26,13,26,0.6));
+    background: linear-gradient(135deg, rgba(45,10,31,0.8), rgba(77,17,57,0.6));
     padding: 2rem;
     border-radius: 20px;
-    border: 1px solid rgba(255,107,107,0.3);
+    border: 1px solid rgba(255,105,180,0.4);
     box-shadow: 
-        0 10px 30px rgba(0,0,0,0.3),
-        inset 0 1px 0 rgba(255,255,255,0.1);
+        0 10px 30px rgba(45,10,31,0.3),
+        inset 0 1px 0 rgba(255,196,221,0.2);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -158,7 +390,7 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,107,107,0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,105,180,0.2), transparent);
     transition: left 0.6s;
 }
 
@@ -168,16 +400,26 @@ body {
 
 .heroine:hover {
     transform: translateY(-5px);
-    border-color: rgba(255,107,107,0.5);
+    border-color: rgba(255,105,180,0.6);
     box-shadow: 
-        0 15px 40px rgba(0,0,0,0.4),
-        0 0 30px rgba(255,107,107,0.2);
+        0 15px 40px rgba(45,10,31,0.4),
+        0 0 30px rgba(255,105,180,0.3);
 }
 
 .heroine h4 {
-    font-size: 1.5rem;
-    color: #ff6b6b;
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: #ff69b4;
     margin-bottom: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.heroine p {
+    font-family: 'Playfair Display', serif;
+    color: #ffb3d6;
+    font-style: italic;
+    line-height: 1.6;
 }
 
 .collection-stats {
@@ -188,25 +430,27 @@ body {
 }
 
 .stat {
-    background: linear-gradient(135deg, #ff6b6b, #4d79ff, #ffd93d);
+    background: linear-gradient(135deg, #ff69b4, #ff1493, #e91e63);
     background-size: 200% 200%;
     animation: gradientShift 3s ease-in-out infinite alternate;
     padding: 0.8rem 1.5rem;
     border-radius: 30px;
     font-weight: bold;
-    font-size: 0.95rem;
+    font-size: 1rem;
+    font-family: 'Playfair Display', serif;
     box-shadow: 
-        0 5px 15px rgba(0,0,0,0.3),
-        inset 0 1px 0 rgba(255,255,255,0.2);
-    border: 1px solid rgba(255,255,255,0.1);
+        0 5px 15px rgba(45,10,31,0.3),
+        inset 0 1px 0 rgba(255,196,221,0.3);
+    border: 1px solid rgba(255,196,221,0.2);
     transition: all 0.3s ease;
+    color: white;
 }
 
 .stat:hover {
     transform: translateY(-3px) scale(1.05);
     box-shadow: 
-        0 10px 25px rgba(0,0,0,0.4),
-        0 0 20px rgba(255,107,107,0.3);
+        0 10px 25px rgba(45,10,31,0.4),
+        0 0 20px rgba(255,105,180,0.4);
 }
 
 /* Collection Links */
@@ -556,5 +800,46 @@ body {
     
     .info-card {
         padding: 1rem;
+    }
+    
+    .animated-showcase {
+        height: 300px;
+    }
+    
+    .slide-content h2 {
+        font-size: 2rem;
+    }
+    
+    .slide-content h3 {
+        font-size: 1.3rem;
+    }
+    
+    .slide-content p {
+        font-size: 1rem;
+    }
+    
+    .showcase-images {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .showcase-image {
+        width: 150px;
+        height: 200px;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .video-controls {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .progress-bar {
+        width: 100%;
     }
 }

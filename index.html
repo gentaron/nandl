@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ninny & Lillie - Photo Collectible</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="hero-section">
@@ -16,6 +17,54 @@
     </header>
 
     <main class="gallery-container">
+        <section class="video-showcase">
+            <div class="video-container">
+                <div class="animated-showcase" id="animatedShowcase">
+                    <div class="showcase-slide active">
+                        <div class="slide-content">
+                            <h2>Ninny & Lillie</h2>
+                            <h3>Superheroines Collection</h3>
+                            <p>48 Exclusive Posterior Portraits</p>
+                        </div>
+                    </div>
+                    <div class="showcase-slide" data-character="ninny">
+                        <div class="slide-content">
+                            <h2>Ninny</h2>
+                            <p>Collectibles #2-#9: Athletic physique captured from behind</p>
+                            <div class="showcase-images" id="ninnyImages">
+                                <!-- Images will be dynamically loaded -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-slide" data-character="lillie">
+                        <div class="slide-content">
+                            <h2>Lillie</h2>
+                            <p>Elegant curves in detailed rear-view compositions</p>
+                            <div class="showcase-images" id="lillieImages">
+                                <!-- Images will be dynamically loaded -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-slide">
+                        <div class="slide-content">
+                            <h2>Created by Apollon</h2>
+                            <p>Comprehensive Creative Space</p>
+                            <div class="cta-buttons">
+                                <a href="https://apolonium.itch.io/heroines" class="cta-btn">View Gallery</a>
+                                <a href="https://www.patreon.com/c/apolon_org" class="cta-btn">Join Community</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-controls">
+                    <button class="control-btn" id="playPauseBtn">⏸️</button>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="photo-info">
             <div class="info-card">
                 <h3>About the Collection</h3>

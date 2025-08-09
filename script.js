@@ -42,9 +42,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             images.push({
                 src: `landn (${i}).png`,
-                title: `${character} - Photo ${i}`,
+                title: `${character} - #${collectibleIndex}`,
                 description: `${characterDescription} - Collectible #${collectibleIndex}`,
-                character: character
+                character: character,
+                collectibleNumber: collectibleIndex
             });
             collectibleIndex++;
         }
@@ -60,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <img src="${image.src}" alt="${image.title}" loading="lazy">
                 <div class="overlay">
                     <h4>${image.title}</h4>
-                    <p>Collectible #${index + 1}</p>
+                    <p>Collectible #${image.collectibleNumber}</p>
                 </div>
             `;
             
@@ -212,6 +213,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add loading animation after gallery is created
     setTimeout(addLoadingAnimation, 100);
     
+    // Video Showcase Functionality
+    initVideoShowcase();
+    
     // Add touch/swipe support for mobile
     let touchStartX = 0;
     let touchEndX = 0;
@@ -292,5 +296,246 @@ document.addEventListener('DOMContentLoaded', function() {
     const statsSection = document.querySelector('.collection-stats');
     if (statsSection) {
         statsObserver.observe(statsSection);
+    }
+    
+    // Video Showcase Initialization
+    function initVideoShowcase() {
+        const showcase = document.getElementById('animatedShowcase');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const progressFill = document.getElementById('progressFill');
+        const slides = document.querySelectorAll('.showcase-slide');
+        const ninnyContainer = document.getElementById('ninnyImages');
+        const lillieContainer = document.getElementById('lillieImages');
+        
+        if (!showcase || !playPauseBtn || !progressFill || slides.length === 0) {
+            return; // Elements not found, skip initialization
+        }
+        
+        let currentSlide = 0;
+        let isPlaying = true;
+        let slideInterval;
+        const slideDuration = 4000; // 4 seconds per slide
+        let progressInterval;
+        
+        // Get random images for characters
+        function getRandomImages(characterImages, count = 2) {
+            const shuffled = [...characterImages].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+        
+        // Filter images by character
+        const ninnyImages = images.filter(img => img.character === 'Ninny');
+        const lillieImages = images.filter(img => img.character === 'Lillie');
+        
+        // Create showcase image element
+        function createShowcaseImage(image) {
+            return `
+                <div class="showcase-image">
+                    <img src="${image.src}" alt="${image.title}" loading="lazy">
+                    <span class="image-label">#${image.collectibleNumber}</span>
+                </div>
+            `;
+        }
+        
+        // Update showcase images
+        function updateShowcaseImages() {
+            if (ninnyContainer) {
+                const randomNinnyImages = getRandomImages(ninnyImages, 2);
+                ninnyContainer.innerHTML = randomNinnyImages.map(createShowcaseImage).join('');
+            }
+            
+            if (lillieContainer) {
+                const randomLillieImages = getRandomImages(lillieImages, 2);
+                lillieContainer.innerHTML = randomLillieImages.map(createShowcaseImage).join('');
+            }
+        }
+        
+        // Start the slideshow
+        function startSlideshow() {
+            slideInterval = setInterval(nextSlide, slideDuration);
+            progressInterval = setInterval(updateProgress, 50);
+            isPlaying = true;
+            playPauseBtn.textContent = '⏸️';
+        }
+        
+        // Pause the slideshow
+        function pauseSlideshow() {
+            clearInterval(slideInterval);
+            clearInterval(progressInterval);
+            isPlaying = false;
+            playPauseBtn.textContent = '▶️';
+        }
+        
+        // Go to next slide
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            slides[currentSlide].classList.add('prev');
+            
+            currentSlide = (currentSlide + 1) % slides.length;
+            
+            // Update random images when entering character slides
+            const currentSlideElement = slides[currentSlide];
+            if (currentSlideElement.dataset.character) {
+                updateShowcaseImages();
+            }
+            
+            slides[currentSlide].classList.remove('prev');
+            slides[currentSlide].classList.add('active');
+            
+            // Reset progress
+            progressFill.style.width = '0%';
+            
+            // Reset previous slide after transition
+            setTimeout(() => {
+                slides.forEach((slide, index) => {
+                    if (index !== currentSlide) {
+                        slide.classList.remove('prev', 'active');
+                    }
+                });
+            }, 800);
+        }
+        
+        // Update progress bar
+        function updateProgress() {
+            const progressPercent = ((Date.now() % slideDuration) / slideDuration) * 100;
+            progressFill.style.width = progressPercent + '%';
+        }
+        
+        // Play/Pause button functionality
+        playPauseBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                pauseSlideshow();
+            } else {
+                startSlideshow();
+            }
+        });
+        
+        // Progress bar click to seek
+        document.querySelector('.progress-bar').addEventListener('click', (e) => {
+            const rect = e.target.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const progressPercent = (clickX / rect.width) * 100;
+            progressFill.style.width = progressPercent + '%';
+            
+            // If playing, restart the current slide cycle
+            if (isPlaying) {
+                pauseSlideshow();
+                setTimeout(startSlideshow, 100);
+            }
+        });
+        
+        // Touch/swipe support for slides
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        showcase.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        showcase.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSlideSwipe();
+        });
+        
+        function handleSlideSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Swipe left - next slide
+                    nextSlide();
+                } else {
+                    // Swipe right - previous slide
+                    slides[currentSlide].classList.remove('active');
+                    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                    
+                    // Update random images when entering character slides
+                    const swipeSlideElement = slides[currentSlide];
+                    if (swipeSlideElement.dataset.character) {
+                        updateShowcaseImages();
+                    }
+                    
+                    slides[currentSlide].classList.add('active');
+                }
+                
+                // Reset slideshow if playing
+                if (isPlaying) {
+                    pauseSlideshow();
+                    setTimeout(startSlideshow, 100);
+                }
+            }
+        }
+        
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (showcase.getBoundingClientRect().top < window.innerHeight && 
+                showcase.getBoundingClientRect().bottom > 0) {
+                switch(e.key) {
+                    case ' ':
+                        e.preventDefault();
+                        playPauseBtn.click();
+                        break;
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        // Previous slide logic (same as swipe right)
+                        slides[currentSlide].classList.remove('active');
+                        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                        
+                        // Update random images when entering character slides
+                        const prevSlideElement = slides[currentSlide];
+                        if (prevSlideElement.dataset.character) {
+                            updateShowcaseImages();
+                        }
+                        
+                        slides[currentSlide].classList.add('active');
+                        if (isPlaying) {
+                            pauseSlideshow();
+                            setTimeout(startSlideshow, 100);
+                        }
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        nextSlide();
+                        if (isPlaying) {
+                            pauseSlideshow();
+                            setTimeout(startSlideshow, 100);
+                        }
+                        break;
+                }
+            }
+        });
+        
+        // Initialize showcase images and first slide
+        updateShowcaseImages();
+        slides[0].classList.add('active');
+        startSlideshow();
+        
+        // Add image error handling
+        function addImageErrorHandling() {
+            const showcaseImages = document.querySelectorAll('.showcase-image img');
+            showcaseImages.forEach(img => {
+                img.onerror = function() {
+                    console.warn(`Showcase image not found: ${this.src}`);
+                    this.style.display = 'none';
+                };
+            });
+        }
+        
+        // Call error handling after each image update
+        const originalUpdateShowcaseImages = updateShowcaseImages;
+        updateShowcaseImages = function() {
+            originalUpdateShowcaseImages();
+            setTimeout(addImageErrorHandling, 100);
+        };
+        
+        // Pause when page is not visible
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && isPlaying) {
+                pauseSlideshow();
+            } else if (!document.hidden && !isPlaying) {
+                startSlideshow();
+            }
+        });
     }
 });
