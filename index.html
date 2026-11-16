@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icons/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <meta name="theme-color" content="#aab8ff" />
     <title>Ninny & Lillie - Photo Collectible</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
@@ -149,5 +153,10 @@
     </footer>
 
     <script src="script.js"></script>
-</body>
+<script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./install-worker.js').catch(console.error);
+    }
+  </script>
+  </body>
 </html>
